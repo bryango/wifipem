@@ -176,7 +176,7 @@ if __name__ == '__main__':
                 print('[+] Performing a live extraction attempt of SSID: {} / BSSID: {}'.format(options['ssid'], bssid))
 
                 import threading
-                from kamene.all import *
+                from kamene.all import sniff, wrpcap
                 thread = threading.Thread(target=liveExtraction, args=( options['interface'], options['ssid'], wpa_supplicant_conf_file, options['timeout'], ))
                 thread.demon = True
                 thread.start()
@@ -204,7 +204,7 @@ if __name__ == '__main__':
             print('[+] Performing a live extraction attempt of SSID: {}'.format(options['ssid']))
     
             import threading
-            from kamene.all import *
+            from kamene.all import sniff, wrpcap
             thread = threading.Thread(target=liveExtraction, args=( options['interface'], options['ssid'], wpa_supplicant_conf_file, options['timeout'], ))
             thread.demon = True
             thread.start()
