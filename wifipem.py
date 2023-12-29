@@ -8,10 +8,23 @@ import binascii
 __version__ = "2.0"
 certificate_prefix = "cert"
 
-parser = argparse.ArgumentParser(description="Automated tool to extract the public key presented by WPA2-Enterprise wireless networks")
-parser.add_argument("--version", action="version", version=__version__)
-parser.add_argument("-o", "--output", dest="output_prefix", default=certificate_prefix, help="filename prefix of the .der output (default: {})".format(certificate_prefix))
-parser.add_argument("-i", "--input", dest="input_filename", help=".pcap file to be extracted")
+parser = argparse.ArgumentParser(
+    description=(
+        "Automated tool to extract the public key "
+        "presented by WPA2-Enterprise wireless networks"
+    )
+)
+parser.add_argument(
+    "--version", action="version", version=__version__
+)
+parser.add_argument(
+    "-o", "--output", dest="output_prefix", default=certificate_prefix,
+    help=f"filename prefix of the .der output (default: {certificate_prefix})",
+)
+parser.add_argument(
+    "-i", "--input", dest="input_filename",
+    help=".pcap file to be extracted"
+)
 
 args, leftover = parser.parse_known_args()
 options = args.__dict__
@@ -47,7 +60,10 @@ def pcapExtraction(input_filename: str, output_prefix: str):
             with open(file, "wb") as f:
                 for ha in hex_array:
                     f.write(binascii.unhexlify(ha))
-            print(f"[-]  open file with the following command:\r\n[-]    openssl x509 -inform der -in {file} -text")
+            print(
+                f"[-]  open file with the following command:\n"
+                f"[-]    openssl x509 -inform der -in {file} -text"
+            )
             count += 1
     return 0
 
@@ -57,7 +73,10 @@ if __name__ == "__main__":
         print("[!] Select one file for extraction")
         exit(0)
 
-    print(f"[+] Searching for RADIUS public certificate in file: {options['input_filename']}")
+    print(
+        f"[+] Searching for RADIUS public certificate in file: "
+        f"{options['input_filename']}"
+    )
     pcapExtraction(
         input_filename=options["input_filename"],
         output_prefix=options["output_prefix"]
