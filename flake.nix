@@ -14,19 +14,8 @@
           version = "0.1.0";
           buildInputs = with pkgs; [
             tshark
-            tcpdump
             (python3.withPackages (python3Packages: with python3Packages; [
               pyshark
-              (let name = "kamene"; in buildPythonPackage {
-                inherit name;
-                src = fetchFromGitHub {
-                  owner = "phaethon";
-                  repo = name;
-                  rev = "master";
-                  hash = "sha256-fZJxNZuk48T1w93ltBuUBaPqtzMsRpxFhjPCW18TE8s=";
-                };
-                doCheck = false;
-              })
             ]))
           ];
           src = ./.;
