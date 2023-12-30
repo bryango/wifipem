@@ -2,6 +2,6 @@ __pycache__/
 *.py[cod]
 
 *.der
-wifipem_certificate_capture.pcap
-wpa_supplicant.conf
+*.pcap
 .direnv
+result

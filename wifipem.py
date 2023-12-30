@@ -68,7 +68,7 @@ def pcapExtraction(input_filename: str, output_prefix: str):
     return 0
 
 
-if __name__ == "__main__":
+def main():
     if options["input_filename"] is None:
         print("[!] Select one file for extraction")
         exit(0)
@@ -82,3 +82,6 @@ if __name__ == "__main__":
         output_prefix=options["output_prefix"]
     )
     exit(0)
+
+if __name__ == "__main__":
+    main()

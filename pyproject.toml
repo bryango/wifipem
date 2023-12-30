@@ -10,6 +10,8 @@ readme = "README.md"
 python = "^3.11"
 pyshark = "^0.6"
 
+[tool.poetry.scripts]
+wifipem = 'wifipem:main'
 
 [build-system]
 requires = ["poetry-core"]
