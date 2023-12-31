@@ -22,10 +22,7 @@
                 pyproject = true;
                 pname = name;
                 inherit version;
-                nativeBuildInputs = [
-                  poetry-core
-                  poetry-dynamic-versioning
-                ];
+                nativeBuildInputs = [ poetry-core ];
                 propagatedBuildInputs = [ tshark pyshark ];
               }
             )
