@@ -1,31 +1,22 @@
 # wifipem
-wifipem is an automated tool for extracting RADIUS public certificates from pcap files and live captures.
+wifipem is an automated tool for extracting RADIUS public certificates from .pcap files.
 
 ## Usage
-wifipem.py is capable of parsing Dot11 pcap captures which include RadioTap abstraction layer or captures without the layer, in addition the ability to conduct a live capture via an EAP-PEAP authentication attempt.
+wifipem.py is capable of parsing Dot11 .pcap captures which include RadioTap abstraction layer or captures without the layer.
 
 ### Examples
 
 #### Extracting RADIUS public certificates from pcaps
 
-```
-┌──(vagrant㉿vagrant-kali-rolling-amd64)-[~/wifipem]
-└─$ ls -lh                                         
-total 100K
--rw-r--r-- 1 vagrant vagrant  166 May  2 10:27 README.md
--rw-r--r-- 1 vagrant vagrant   92 May  2 22:45 settings.py
--rw-r--r-- 1 vagrant vagrant 2.1K May  2 22:45 wifipem.py
-                                                                                                                                                                                                                                             
-┌──(vagrant㉿vagrant-kali-rolling-amd64)-[~/wifipem]
-└─$ python3 wifipem.py -f wifipem_certificate_capture.pcap
+```console
+$ python3 wifipem.py -i tshark.pcap
 [+] Searching for RADIUS public certificate in file: wifipem_certificate_capture.pcap
 [-]  certificate frame found!
-[-]  extracting certificate to file: radius.der.1
+[-]  extracting certificate to file: cert-tshark-xx:xx:xx:xx:xx:xx-1.der
 [-]  open file with the following command:
-[-]    openssl x509 -inform der -in radius.der.1 -text
+[-]    openssl x509 -inform der -in cert-tshark-xx:xx:xx:xx:xx:xx-1.der -text
                                                                                                                     
-┌──(vagrant㉿vagrant-kali-rolling-amd64)-[~/wifipem]
-└─$ openssl x509 -inform der -in radius.der.1 -text       
+$ openssl x509 -inform der -in cert-tshark-xx:xx:xx:xx:xx:xx-1.der -text       
 Certificate:
     Data:
         Version: 3 (0x2)
@@ -99,41 +90,8 @@ qa2fXVEngD752hMj1MKdLBN8/kmMp3p04/YJDkDa5nRgP9eWnQFBStdp6Vkdpa18
 FT7kZEIyJeIadRE+0VZ/xg+h/NcmUjd9CEFepO8aqyCV2i+B2l7jj0PIf4B0yTPl
 cg==
 -----END CERTIFICATE-----
-
-┌──(vagrant㉿vagrant-kali-rolling-amd64)-[~/wifipem]
-└─$
-```
-
-#### Extracting RADIUS public certificates from pcaps
-```
-┌──(vagrant㉿vagrant-kali-rolling-amd64)-[~/wifipem]
-└─$ sudo python3 wifipem.py -s rogue -i wlan1                                         
-[+] Creating wpa_supplicant.conf file
-[+] Performing a live extraction attempt of SSID: rogue
-WARNING: No route found for IPv6 destination :: (no default route?). This affects only IPv6
-WARNING: can't import layer ipsec: cannot import name 'gcd' from 'fractions' (/usr/lib/python3.9/fractions.py)
-[-]  Connecting to wireless network "rogue" using wpa_supplicant.conf file: wpa_supplicant.conf
-[-]  Capturing wireless handshake
-[-]  Writing captured wireless frames to file: wifipem_certificate_capture.pcap
-[-]  certificate frame found!
-[-]  extracting certificate to file: radius.der.1
-[-]  open file with the following command:
-[-]    openssl x509 -inform der -in radius.der.1 -text
-                                                                                                                                                                                                                                             
-┌──(vagrant㉿vagrant-kali-rolling-amd64)-[~/wifipem]
-└─$
 ```
 
 ## Dependencies
-1. `pyshark`
-2. `tshark`
-
-### Install
-#### pyshark
-`python3 -m pip install pyshark`
-
-#### tshark
-```
-sudo apt update
-sudo apt install tshark
-```
+0. system: `tshark`
+1. python: `pyshark`
