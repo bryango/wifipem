@@ -8,32 +8,33 @@
       forAllSystems = lib.genAttrs supportedSystems;
       systemsPkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
 
-      mkPackage = pkgs:
-        let
-          pyproject = lib.importTOML ./pyproject.toml;
-          inherit (pyproject.tool.poetry) name version;
-          pname = name;
-        in
-        {
-          default = pkgs.python3Packages.callPackage
-            (
-              { buildPythonPackage, poetry-core, tshark, pyshark }:
-              buildPythonPackage {
-                src = ./.;
-                pyproject = true;
-                inherit pname version;
-                nativeBuildInputs = [ poetry-core tshark.out ];
-                propagatedBuildInputs = [ pyshark ];
-              }
-            )
-            { };
-        };
+      pyproject = lib.importTOML ./pyproject.toml;
+      inherit (pyproject.tool.poetry) name version;
+      pname = name;
+
+      mkPackage = pkgs: {
+        default = pkgs.python3Packages.callPackage
+          (
+            { buildPythonPackage, poetry-core, tshark, pyshark }:
+            buildPythonPackage {
+              src = ./.;
+              pyproject = true;
+              inherit pname version;
+              ## build and dev environment
+              nativeBuildInputs = [ poetry-core tshark.out ];
+              propagatedBuildInputs = [ pyshark ];
+            }
+          )
+          { };
+      };
       packages = builtins.mapAttrs (system: mkPackage) systemsPkgs;
     in
     {
       inherit
         lib
         packages;
+
+      ## for easy access in dev repl
       inherit (nixpkgs) legacyPackages;
     };
 }
