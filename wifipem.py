@@ -4,16 +4,17 @@ import argparse
 import pyshark
 import binascii
 
-## Settings
-__version__ = "2.0"
-certificate_prefix = "cert"
-
 parser = argparse.ArgumentParser(
     description=(
         "Automated tool to extract the public key "
         "presented by WPA2-Enterprise wireless networks"
     )
 )
+
+## settings
+__version__ = "2.0"
+certificate_prefix = "cert"
+
 parser.add_argument(
     "--version", action="version", version=__version__
 )

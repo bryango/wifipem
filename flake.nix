@@ -11,7 +11,8 @@
       mkPackage = pkgs:
         let
           pyproject = lib.importTOML ./pyproject.toml;
-          inherit (pyproject.tool.poetry) name version; # TODO: dynamic version
+          inherit (pyproject.tool.poetry) name version;
+          pname = name;
         in
         {
           default = pkgs.python3Packages.callPackage
@@ -20,8 +21,7 @@
               buildPythonPackage {
                 src = ./.;
                 pyproject = true;
-                pname = name;
-                inherit version;
+                inherit pname version;
                 nativeBuildInputs = [ poetry-core ];
                 propagatedBuildInputs = [ tshark pyshark ];
               }
@@ -29,13 +29,11 @@
             { };
         };
       packages = builtins.mapAttrs (system: mkPackage) systemsPkgs;
-      apps = packages; # TODO: toPythonApplication
     in
     {
       inherit
         lib
-        packages
-        apps;
+        packages;
       inherit (nixpkgs) legacyPackages;
     };
 }
