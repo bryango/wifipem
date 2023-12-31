@@ -22,8 +22,8 @@
                 src = ./.;
                 pyproject = true;
                 inherit pname version;
-                nativeBuildInputs = [ poetry-core ];
-                propagatedBuildInputs = [ tshark pyshark ];
+                nativeBuildInputs = [ poetry-core tshark.out ];
+                propagatedBuildInputs = [ pyshark ];
               }
             )
             { };
