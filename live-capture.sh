@@ -29,7 +29,6 @@ fi
 
 tshark --monitor-mode -w "$pcap" --autostop "duration:$capture_duration" "$@"
 
->&2 echo ""
 if [[ ! -r "$pcap" ]]; then
     exit 1
 fi
@@ -40,9 +39,7 @@ python3 -m wifipem -i "$pcap"
 >&2 echo ""
 if ip addr | grep --color=always mon; then
     >&2 echo ""
-    >&2 echo "## you may need to manually delete these monitor interfaces; e.g."
-    >&2 echo ""
-    >&2 echo "sudo iw dev mon0 del"
-    >&2 echo ""
-    >&2 echo "where mon0 is the name of the monitor interface."
+    >&2 echo "[+] you may need to manually delete these interfaces; try e.g."
+    >&2 echo "[-]    sudo iw dev mon0 del"
+    >&2 echo "[-] ... where mon0 is the name of the monitor interface."
 fi

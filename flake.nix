@@ -12,7 +12,7 @@
       inherit (pyproject.tool.poetry) name version;
       pname = name;
 
-      mkPackage = pkgs: {
+      mkPackage = pkgs: lib.fix (self: {
         default = pkgs.python3Packages.callPackage
           (
             { buildPythonPackage, poetry-core, tshark, pyshark }:
@@ -26,7 +26,22 @@
             }
           )
           { };
-      };
+
+        live-capture = pkgs.writeShellApplication {
+          name = "wifipem-live-capture";
+          runtimeInputs = with pkgs; [
+            tshark.out
+            gnugrep
+            iproute2
+            libcap # for `getcap` and `setcap`
+            ## the system `sudo` may be used for priviledge escalation
+            (python3.withPackages (python3Packages: [
+              self.default
+            ]))
+          ];
+          text = builtins.readFile ./live-capture.sh;
+        };
+      });
       packages = builtins.mapAttrs (system: mkPackage) systemsPkgs;
     in
     {
