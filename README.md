@@ -15,7 +15,7 @@ $ python3 wifipem.py -i tshark.pcap
 [-]  extracting certificate to file: cert-tshark-xx:xx:xx:xx:xx:xx-1.der
 [-]  open file with the following command:
 [-]    openssl x509 -inform der -in cert-tshark-xx:xx:xx:xx:xx:xx-1.der -text
-                                                                                                                    
+
 $ openssl x509 -inform der -in cert-tshark-xx:xx:xx:xx:xx:xx-1.der -text       
 Certificate:
     Data:
