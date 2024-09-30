@@ -3,5 +3,6 @@ __pycache__/
 
 *.der
 *.pcap
+*.pem
 .direnv
 result
